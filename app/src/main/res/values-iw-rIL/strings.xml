@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Workout Tracker</string>
+    <string name="btn_txt_begin_workout">התחל אימון</string>
+    <string name="btn_txt_edit_workout">ערוך אימון</string>
+    <string name="btn_txt_track_workout">מעקב אימונים</string>
+    <string name="btn_txt_settings">הגדרות</string>
+</resources>

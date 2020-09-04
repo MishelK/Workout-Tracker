@@ -16,6 +16,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".BeginWorkoutActivity" android:launchMode="singleTask"/>
+        <activity android:name=".EditWorkoutActivity" android:launchMode="singleTask"/>
+        <activity android:name=".TrackWorkoutActivity" android:launchMode="singleTask"/>
+        <activity android:name=".SettingsActivity" android:launchMode="singleTask"/>
     </application>
 
 </manifest>
