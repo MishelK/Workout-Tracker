@@ -5,4 +5,10 @@
     <string name="btn_txt_edit_workout">ערוך אימון</string>
     <string name="btn_txt_track_workout">מעקב אימונים</string>
     <string name="btn_txt_settings">הגדרות</string>
+    <string name="btn_txt_add_new_workout">הוספת אימון חדש</string>
+    <string name="btn_txt_close">סגור</string>
+    <string name="btn_txt_add">הוספה</string>
+    <string name="tv_txt_workoutname">שם האימון</string>
+    <string name="tv_txt_workoutdescription">תיאור</string>
+    <string name="hint_et_workoutdescription">( קבוצות שרירים, אורך אימון, וכו )</string>
 </resources>

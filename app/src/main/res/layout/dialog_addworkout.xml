@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="350dp"
+    android:layout_height="450dp"
+    android:background="@drawable/solidturqoise"
+    android:padding="40dp">
+
+    <TextView
+    android:id="@+id/tv_workout_name"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="@string/tv_txt_workoutname"
+    android:textColor="#000000"
+    android:textSize="30sp"
+    android:layout_centerHorizontal="true"
+    android:layout_margin="5dp"
+    />
+
+    <EditText
+        android:id="@+id/et_workout_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_workout_name"
+        android:background="#ffffff"
+        android:layout_marginHorizontal="15sp"
+        android:layout_marginTop="10sp"
+        android:textSize="20sp"
+        android:layout_centerHorizontal="true"
+        />
+
+    <TextView
+        android:id="@+id/tv_workout_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/tv_txt_workoutdescription"
+        android:textColor="#000000"
+        android:textSize="30sp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/et_workout_name"
+        android:layout_marginTop="15dp"
+        />
+
+    <EditText
+        android:id="@+id/et_workout_description"
+        android:layout_width="match_parent"
+        android:layout_height="100sp"
+        android:layout_below="@id/tv_workout_description"
+        android:background="#ffffff"
+        android:layout_marginHorizontal="15sp"
+        android:layout_marginTop="10sp"
+        android:textSize="20sp"
+        android:layout_centerHorizontal="true"
+        android:hint="@string/hint_et_workoutdescription"
+        />
+
+
+    <RelativeLayout
+        android:id="@+id/layout_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="62dp"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true">
+
+        <Button
+            android:id="@+id/btn_close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="5dp"
+            android:paddingHorizontal="20dp"
+            android:paddingVertical="10dp"
+            android:text="@string/btn_txt_close"
+            android:textColor="#000000"
+            android:textSize="25sp" />
+
+        <Button
+            android:id="@+id/btn_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="5dp"
+            android:layout_toEndOf="@id/btn_close"
+            android:paddingHorizontal="34dp"
+            android:paddingVertical="10dp"
+            android:text="@string/btn_txt_add"
+            android:textColor="#000000"
+            android:textSize="25sp" />
+
+
+    </RelativeLayout>
+
+</RelativeLayout>
