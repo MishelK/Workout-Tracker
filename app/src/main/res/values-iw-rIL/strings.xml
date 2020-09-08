@@ -11,4 +11,6 @@
     <string name="tv_txt_workoutname">שם האימון</string>
     <string name="tv_txt_workoutdescription">תיאור</string>
     <string name="hint_et_workoutdescription">( קבוצות שרירים, אורך אימון, וכו )</string>
+    <string name="toast_data_add_success">המידע נשמר בהצלחה</string>
+    <string name="toast_data_add_failed">שמירת המידע נכשלה</string>
 </resources>

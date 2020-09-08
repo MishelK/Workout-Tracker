@@ -7,6 +7,8 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -20,7 +22,7 @@ public class EditWorkoutActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editworkout);
 
-        //Setting Return Button
+        //Setting Return Button listener
         Button btnReturn = findViewById(R.id.btn_return_edit);
         btnReturn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -31,7 +33,7 @@ public class EditWorkoutActivity extends AppCompatActivity {
             }
         });
 
-        //Setting Add Workout Button
+        //Setting Add Workout Button listener
         Button btnAddWorkout = findViewById(R.id.btn_add_new_workout);
         btnAddWorkout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,6 +53,12 @@ public class EditWorkoutActivity extends AppCompatActivity {
         dialog.setCancelable(true);
         dialog.show();
 
+        final DatabaseHelper db = new DatabaseHelper(this);
+
+        final EditText workoutNameEt = dialog.findViewById(R.id.et_workout_name);
+        final EditText workoutDescEt = dialog.findViewById(R.id.et_workout_description);
+
+        //Setting Button Listeners
         Button closeBtn = dialog.findViewById(R.id.btn_close);
         closeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,6 +66,20 @@ public class EditWorkoutActivity extends AppCompatActivity {
                 dialog.dismiss();
             }
         });
+
+        Button addBtn = dialog.findViewById(R.id.btn_add);
+        addBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boolean isInserted = db.addWorkout(workoutNameEt.getText().toString(), workoutDescEt.getText().toString()); //Sending the new workout data to insert data method
+
+                if(isInserted)
+                    Toast.makeText(EditWorkoutActivity.this, R.string.toast_data_add_success, Toast.LENGTH_SHORT).show();
+                else
+                    Toast.makeText(EditWorkoutActivity.this, R.string.toast_data_add_failed, Toast.LENGTH_SHORT).show();
+            }
+        });
+
 
 
     }

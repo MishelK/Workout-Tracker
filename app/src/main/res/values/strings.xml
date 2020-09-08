@@ -10,4 +10,6 @@
     <string name="tv_txt_workoutname">Workout Name</string>
     <string name="tv_txt_workoutdescription">Description</string>
     <string name="hint_et_workoutdescription">( Muscle groups, Length, etc.. )</string>
+    <string name="toast_data_add_success">Data saved successfully</string>
+    <string name="toast_data_add_failed">Failed to save data</string>
 </resources>

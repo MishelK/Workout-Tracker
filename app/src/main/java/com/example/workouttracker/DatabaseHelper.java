@@ -1,5 +1,6 @@
 package com.example.workouttracker;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -8,6 +9,8 @@ import androidx.annotation.Nullable;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
+    private static DatabaseHelper instance = null;
+
     public static final String DATABASE_NAME = "Workout.db";
     public static final String WORKOUT_TABLE_NAME = "workout_table";
     public static final String COL_1 = "Workout_ID";
@@ -15,10 +18,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String COL_3 = "workout_Description";
 
 
+    public static DatabaseHelper getInstance(Context context){
+
+        if(instance == null)
+            instance = new DatabaseHelper(context.getApplicationContext());
+        return instance;
+    }
+
 
     public DatabaseHelper(@Nullable Context context) {
         super(context, DATABASE_NAME, null, 1);
-        SQLiteDatabase db = this.getWritableDatabase();
+
     }
 
     @Override
@@ -35,5 +45,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
 
     }
+
+    public boolean addWorkout(String name, String description) {
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COL_2, name);
+        contentValues.put(COL_3, description);
+
+        long result = db.insert(WORKOUT_TABLE_NAME, null, contentValues); //Inserting new data into table
+
+        return result != -1;
+    }
+
 
 }
