@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="350dp"
-    android:layout_height="450dp"
+    android:layout_width="320dp"
+    android:layout_height="410dp"
     android:background="@drawable/solidturqoise"
     android:padding="40dp">
 
@@ -64,11 +64,11 @@
 
         <Button
             android:id="@+id/btn_close"
-            android:layout_width="wrap_content"
+            android:layout_width="110dp"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_margin="5dp"
-            android:paddingHorizontal="20dp"
+            android:paddingHorizontal="0dp"
             android:paddingVertical="10dp"
             android:text="@string/btn_txt_close"
             android:textColor="#000000"
@@ -76,12 +76,12 @@
 
         <Button
             android:id="@+id/btn_add"
-            android:layout_width="wrap_content"
+            android:layout_width="110dp"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_margin="5dp"
             android:layout_toEndOf="@id/btn_close"
-            android:paddingHorizontal="34dp"
+            android:paddingHorizontal="20dp"
             android:paddingVertical="10dp"
             android:text="@string/btn_txt_add"
             android:textColor="#000000"
