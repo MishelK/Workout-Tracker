@@ -53,8 +53,6 @@ public class EditWorkoutActivity extends AppCompatActivity {
         dialog.setCancelable(true);
         dialog.show();
 
-        final DatabaseHelper db = new DatabaseHelper(this);
-
         final EditText workoutNameEt = dialog.findViewById(R.id.et_workout_name);
         final EditText workoutDescEt = dialog.findViewById(R.id.et_workout_description);
 
@@ -71,12 +69,24 @@ public class EditWorkoutActivity extends AppCompatActivity {
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean isInserted = db.addWorkout(workoutNameEt.getText().toString(), workoutDescEt.getText().toString()); //Sending the new workout data to insert data method
+
+                String name, description;
+                name = workoutNameEt.getText().toString();
+                description = workoutDescEt.getText().toString();
+
+                if(name.isEmpty()) { //Checking if user has entered a name
+                    Toast.makeText(EditWorkoutActivity.this, R.string.toast_data_empty_field, Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                boolean isInserted = DatabaseHelper.getInstance(EditWorkoutActivity.this).addWorkout(name,description); //Sending the new workout data to insert data method
 
                 if(isInserted)
                     Toast.makeText(EditWorkoutActivity.this, R.string.toast_data_add_success, Toast.LENGTH_SHORT).show();
                 else
                     Toast.makeText(EditWorkoutActivity.this, R.string.toast_data_add_failed, Toast.LENGTH_SHORT).show();
+
+                dialog.dismiss();
             }
         });
 

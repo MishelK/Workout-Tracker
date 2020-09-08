@@ -13,4 +13,5 @@
     <string name="hint_et_workoutdescription">( קבוצות שרירים, אורך אימון, וכו )</string>
     <string name="toast_data_add_success">המידע נשמר בהצלחה</string>
     <string name="toast_data_add_failed">שמירת המידע נכשלה</string>
+    <string name="toast_data_empty_field">יש להכניס שם אימון</string>
 </resources>
