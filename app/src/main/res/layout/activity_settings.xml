@@ -11,4 +11,60 @@
         android:layout_marginVertical="10sp"
         android:id="@+id/btn_return_settings"/>
 
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10sp"
+        android:layout_marginVertical="10sp"
+        android:id="@+id/btn_view_data"
+        android:layout_below="@id/btn_return_settings"
+        android:layout_centerHorizontal="true"
+        android:text="View Data"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10sp"
+        android:layout_marginVertical="10sp"
+        android:id="@+id/btn_update_data"
+        android:layout_below="@id/btn_view_data"
+        android:layout_centerHorizontal="true"
+        android:text="Update Data"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10sp"
+        android:layout_marginVertical="10sp"
+        android:id="@+id/btn_delete_data"
+        android:layout_toRightOf="@id/btn_update_data"
+        android:layout_below="@id/btn_view_data"
+        android:layout_centerHorizontal="true"
+        android:text="Delete Data"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/et_update_id"
+        android:layout_below="@id/btn_update_data"
+        android:layout_centerHorizontal="true"
+        />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/et_update_name"
+        android:layout_below="@id/et_update_id"
+        android:layout_centerHorizontal="true"
+        />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/et_update_desc"
+        android:layout_below="@id/et_update_name"
+        android:layout_centerHorizontal="true"
+        />
+
 </RelativeLayout>
