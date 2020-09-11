@@ -1,4 +1,4 @@
-package com.example.workouttracker;
+package com.example.workouttracker.Activities;
 
 import android.content.Intent;
 import android.database.Cursor;
@@ -11,6 +11,9 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.workouttracker.Classes.DatabaseHelper;
+import com.example.workouttracker.R;
 
 public class SettingsActivity extends AppCompatActivity {
 

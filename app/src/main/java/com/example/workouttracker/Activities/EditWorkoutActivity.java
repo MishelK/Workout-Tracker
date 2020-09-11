@@ -1,8 +1,7 @@
-package com.example.workouttracker;
+package com.example.workouttracker.Activities;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
@@ -20,7 +19,8 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import org.w3c.dom.Text;
+import com.example.workouttracker.Classes.DatabaseHelper;
+import com.example.workouttracker.R;
 
 import java.util.Objects;
 
@@ -117,6 +117,7 @@ public class EditWorkoutActivity extends AppCompatActivity {
             LinearLayout workoutPreviewsLayout = findViewById(R.id.ll_workout_preview); // Linear Layout that will contain all sub-RelativeLayouts
             workoutPreviewsLayout.removeAllViews();
             TextView nameTv, descTv;
+            Button btnInfo;
 
             LayoutInflater layoutInflater;
             layoutInflater = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -132,6 +133,14 @@ public class EditWorkoutActivity extends AppCompatActivity {
                 nameTv.setText(result.getString(1));
                 descTv = workoutPreview.findViewById(R.id.tv_workout_preview_desc);
                 descTv.setText(result.getString(2));
+                btnInfo = workoutPreview.findViewById(R.id.btn_workout_more);
+                btnInfo.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(EditWorkoutActivity.this, WorkoutInfoActivity.class);
+                        startActivity(intent);
+                    }
+                });
 
                 workoutPreviewsLayout.addView(workoutPreview);
 

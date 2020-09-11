@@ -1,4 +1,4 @@
-package com.example.workouttracker;
+package com.example.workouttracker.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,6 +7,8 @@ import android.widget.Button;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.workouttracker.R;
 
 public class TrackWorkoutActivity extends AppCompatActivity {
 
