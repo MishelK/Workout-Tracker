@@ -13,10 +13,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static DatabaseHelper instance = null;
 
     public static final String DATABASE_NAME = "Workout.db";
-    public static final String WORKOUT_TABLE_NAME = "workout_table";
-    public static final String COL_1 = "Workout_ID";
-    public static final String COL_2 = "Workout_Name";
-    public static final String COL_3 = "workout_Description";
+    public static final String TABLE_NAME_WORKOUT = "workout_table";
+    public static final String TABLE_NAME_DRILL = "drill_table";
+    public static final String COL_1_WORKOUT = "Workout_ID";
+    public static final String COL_2_WORKOUT = "Workout_Name";
+    public static final String COL_3_WORKOUT = "workout_Description";
+    public static final String COL_1_DRILL = "Drill_ID";
+    public static final String COL_2_DRILL = "Drill_Name";
+    public static final String COL_3_DRILL = "Drill_Reps";
+    public static final String COL_4_DRILL = "Drill_Sets";
+    public static final String COL_5_DRILL = "Workout_ID";
+
 
 
     public static DatabaseHelper getInstance(Context context){
@@ -35,14 +42,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
 
-        db.execSQL("CREATE TABLE " + WORKOUT_TABLE_NAME + "(" + COL_1 + " INTEGER PRIMARY KEY AUTOINCREMENT," + COL_2 + " TEXT," + COL_3 +" TEXT)" ); //Creates the Workout table
+        db.execSQL("CREATE TABLE " + TABLE_NAME_WORKOUT + "(" + COL_1_WORKOUT + " INTEGER PRIMARY KEY AUTOINCREMENT," + COL_2_WORKOUT + " TEXT," + COL_3_WORKOUT +" TEXT)" ); //Creates the Workout table
+        db.execSQL("CREATE TABLE " + TABLE_NAME_DRILL + "(" + COL_1_DRILL + "INTEGER PRIMARY KEY AUTOINCREMENT," + COL_2_DRILL + "TEXT," + COL_3_DRILL + "TEXT," + COL_4_DRILL + "TEXT" + COL_5_DRILL + "TEXT)"); //Creates the Drill table
 
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
-        db.execSQL("DROP TABLE IF EXISTS " + WORKOUT_TABLE_NAME);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME_WORKOUT);
+        db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME_DRILL);
         onCreate(db);
 
     }
@@ -51,10 +60,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(COL_2, name);
-        contentValues.put(COL_3, description);
+        contentValues.put(COL_2_WORKOUT, name);
+        contentValues.put(COL_3_WORKOUT, description);
 
-        long result = db.insert(WORKOUT_TABLE_NAME, null, contentValues); //Inserting new data into table
+        long result = db.insert(TABLE_NAME_WORKOUT, null, contentValues); //Inserting new data into table
 
         return result != -1;
     }
@@ -63,27 +72,66 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(COL_1, id);
-        contentValues.put(COL_2, name);
-        contentValues.put(COL_3, description);
-        long result = db.update(WORKOUT_TABLE_NAME, contentValues, COL_1 + " = ?", new String[] { id });
+        contentValues.put(COL_1_WORKOUT, id);
+        contentValues.put(COL_2_WORKOUT, name);
+        contentValues.put(COL_3_WORKOUT, description);
+        long result = db.update(TABLE_NAME_WORKOUT, contentValues, COL_1_WORKOUT + " = ?", new String[] { id });
         return result != 0;
     }
 
     public boolean deleteWorkout(String id) {
 
         SQLiteDatabase db = this.getWritableDatabase();
-        long result = db.delete(WORKOUT_TABLE_NAME, COL_1 + " = ?", new String[] { id });
+        long result = db.delete(TABLE_NAME_WORKOUT, COL_1_WORKOUT + " = ?", new String[] { id });
         return result != 0;
     }
 
     public Cursor getAllWorkoutData() {
 
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor result = db.rawQuery("SELECT * FROM " + WORKOUT_TABLE_NAME, null); //Gets all data from table
+        Cursor result = db.rawQuery("SELECT * FROM " + TABLE_NAME_WORKOUT, null); //Gets all data from table
         return result;
     }
 
+    public boolean addDrill(String name, String reps, String sets, String workoutID) {
 
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COL_2_DRILL, name);
+        contentValues.put(COL_3_DRILL, reps);
+        contentValues.put(COL_4_DRILL, sets);
+        contentValues.put(COL_5_DRILL, workoutID);
+
+        long result = db.insert(TABLE_NAME_DRILL, null, contentValues);
+
+        return result != -1;
+    }
+
+    public boolean updateDrill(String drillID, String name, String reps, String sets, String workoutID) {
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COL_1_DRILL, drillID);
+        contentValues.put(COL_2_DRILL, name);
+        contentValues.put(COL_3_DRILL, reps);
+        contentValues.put(COL_4_DRILL, sets);
+        contentValues.put(COL_5_DRILL, workoutID);
+        long result = db.update(TABLE_NAME_DRILL, contentValues, COL_1_DRILL + " = ?", new String[] { drillID });
+        return result != 0;
+    }
+
+    public boolean deleteDrill(String id) {
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        long result = db.delete(TABLE_NAME_DRILL, COL_1_DRILL + " = ?", new String[] { id });
+        return result != 0;
+    }
+
+    public Cursor getAllDrillsData(String workoutID) {
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor result = db.rawQuery("SELECT * FROM " + TABLE_NAME_WORKOUT + " WHERE " + COL_5_DRILL + " = " + workoutID, null); //Gets all data from table
+        return result;
+    }
 
 }
