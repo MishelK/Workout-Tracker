@@ -26,12 +26,14 @@ import java.util.Objects;
 
 public class EditWorkoutActivity extends AppCompatActivity {
 
+    public static final String WORKOUT_ID = "workout_id";
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_editworkout);
 
-        LoadWorkoutPreview(); // Loading workout preview list
+        loadWorkoutPreview(); // Loading workout preview list
 
         //Setting Return Button listener
         Button btnReturn = findViewById(R.id.btn_return_edit);
@@ -96,7 +98,7 @@ public class EditWorkoutActivity extends AppCompatActivity {
                 if(isInserted) {
                     Toast.makeText(EditWorkoutActivity.this, R.string.toast_data_add_success, Toast.LENGTH_SHORT).show();
                     dialog.dismiss();
-                    LoadWorkoutPreview(); // After successfully adding a new workout we want to reload the workout preview list
+                    loadWorkoutPreview(); // After successfully adding a new workout we want to reload the workout preview list
                 }
                 else
                     Toast.makeText(EditWorkoutActivity.this, R.string.toast_data_add_failed, Toast.LENGTH_SHORT).show();
@@ -108,9 +110,9 @@ public class EditWorkoutActivity extends AppCompatActivity {
 
     }
 
-    public void LoadWorkoutPreview() {
+    public void loadWorkoutPreview() {
 
-        Cursor result = DatabaseHelper.getInstance(EditWorkoutActivity.this).getAllWorkoutData();
+        final Cursor result = DatabaseHelper.getInstance(EditWorkoutActivity.this).getAllWorkoutData();
 
         if(result.getCount() > 0) { // Checking if there are any workouts in the database
 
@@ -134,10 +136,12 @@ public class EditWorkoutActivity extends AppCompatActivity {
                 descTv = workoutPreview.findViewById(R.id.tv_workout_preview_desc);
                 descTv.setText(result.getString(2));
                 btnInfo = workoutPreview.findViewById(R.id.btn_workout_more);
+                final String workoutID = result.getString(0);
                 btnInfo.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent intent = new Intent(EditWorkoutActivity.this, WorkoutInfoActivity.class);
+                        Intent intent = new Intent(EditWorkoutActivity.this, WorkoutInfoActivity.class); // Upon clicking the arrow button on a workout preview, user will be shown a detailed view
+                        intent.putExtra(WORKOUT_ID, workoutID);
                         startActivity(intent);
                     }
                 });

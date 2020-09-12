@@ -93,6 +93,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return result;
     }
 
+    public Cursor getWorkoutDataByID(String workoutID) {
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor result = db.rawQuery("SELECT * FROM " + TABLE_NAME_WORKOUT + " WHERE " + COL_1_WORKOUT + " = ?",new String[] { workoutID });
+        return result;
+
+    }
+
     public boolean addDrill(String name, String reps, String sets, String workoutID) {
 
         SQLiteDatabase db = this.getWritableDatabase();

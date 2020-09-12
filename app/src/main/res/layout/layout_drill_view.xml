@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="300dp"
+    android:layout_height="130dp"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_drill_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="15dp"
+        android:textSize="30sp"
+        android:textColor="#000000"
+        />
+
+    <TextView
+        android:id="@+id/tv_txt_sets"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_drill_name"
+        android:text="@string/tv_txt_sets"
+        android:layout_marginStart="15dp"
+        android:textSize="20sp"
+        android:textColor="#000000"
+        />
+
+    <TextView
+        android:id="@+id/tv_num_sets"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:textSize="20sp"
+        android:textColor="#000000"
+        android:layout_toEndOf="@id/tv_txt_sets"
+        android:layout_below="@id/tv_drill_name"
+        />
+
+    <TextView
+        android:id="@+id/tv_txt_repss"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_txt_sets"
+        android:text="@string/tv_txt_reps"
+        android:layout_marginStart="15dp"
+        android:textSize="20sp"
+        android:textColor="#000000"
+        />
+
+    <TextView
+        android:id="@+id/tv_num_reps"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:textSize="20sp"
+        android:textColor="#000000"
+        android:layout_toEndOf="@id/tv_txt_sets"
+        android:layout_below="@id/tv_num_sets"
+        />
+
+    <Button
+        android:id="@+id/btn_drill_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_txt_delete"
+        android:layout_centerVertical="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="10dp"/>
+
+
+
+</RelativeLayout>
