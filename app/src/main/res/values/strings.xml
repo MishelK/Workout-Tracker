@@ -14,9 +14,12 @@
     <string name="toast_data_add_failed">Failed to save data</string>
     <string name="toast_data_empty_field">Name field cannot be empty</string>
     <string name="btn_txt_add_new_drill">Add new drill</string>
-    <string name="tv_txt_reps">"Reps : "</string>
-    <string name="tv_txt_sets">"Sets : "</string>
+    <string name="tv_txt_reps">Reps</string>
+    <string name="tv_txt_sets">Sets</string>
     <string name="btn_txt_delete">Delete</string>
     <string name="toast_delete_success">Delete Successful</string>
     <string name="toast_delete_fail">Delete Failed</string>
+    <string name="btn_txt_save">Save</string>
+    <string name="btn_txt_cancel">Cancel</string>
+    <string name="tv_txt_drill_name">Drill Name</string>
 </resources>

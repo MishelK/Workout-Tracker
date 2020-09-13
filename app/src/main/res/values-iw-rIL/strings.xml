@@ -15,9 +15,12 @@
     <string name="toast_data_add_failed">שמירת המידע נכשלה</string>
     <string name="toast_data_empty_field">יש להכניס שם אימון</string>
     <string name="btn_txt_add_new_drill">הוספת תרגיל חדש</string>
-    <string name="tv_txt_reps">"חזרות : "</string>
-    <string name="tv_txt_sets">"סטים : "</string>
+    <string name="tv_txt_reps">חזרות</string>
+    <string name="tv_txt_sets">סטים</string>
     <string name="btn_txt_delete">מחק</string>
     <string name="toast_delete_success">נמחק בהצלחה</string>
     <string name="toast_delete_fail">מחיקה נכשלה</string>
+    <string name="btn_txt_save">שמור</string>
+    <string name="btn_txt_cancel">בטל</string>
+    <string name="tv_txt_drill_name">שם התרגיל</string>
 </resources>

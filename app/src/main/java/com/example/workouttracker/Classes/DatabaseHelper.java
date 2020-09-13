@@ -14,7 +14,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public static final String DATABASE_NAME = "Workout.db";
     public static final String TABLE_NAME_WORKOUT = "workout_table";
-    public static final String TABLE_NAME_DRILL = "drill_table";
+    public static final String TABLE_NAME_DRILL = "drills_table";
     public static final String COL_1_WORKOUT = "Workout_ID";
     public static final String COL_2_WORKOUT = "Workout_Name";
     public static final String COL_3_WORKOUT = "workout_Description";
@@ -43,7 +43,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
 
         db.execSQL("CREATE TABLE " + TABLE_NAME_WORKOUT + "(" + COL_1_WORKOUT + " INTEGER PRIMARY KEY AUTOINCREMENT," + COL_2_WORKOUT + " TEXT," + COL_3_WORKOUT +" TEXT)" ); //Creates the Workout table
-        db.execSQL("CREATE TABLE " + TABLE_NAME_DRILL + "(" + COL_1_DRILL + "INTEGER PRIMARY KEY AUTOINCREMENT," + COL_2_DRILL + "TEXT," + COL_3_DRILL + "TEXT," + COL_4_DRILL + "TEXT" + COL_5_DRILL + "TEXT)"); //Creates the Drill table
+        db.execSQL("CREATE TABLE " + TABLE_NAME_DRILL + "(" + COL_1_DRILL + " INTEGER PRIMARY KEY AUTOINCREMENT," + COL_2_DRILL + " TEXT," + COL_3_DRILL + " TEXT," + COL_4_DRILL + " TEXT," + COL_5_DRILL + " TEXT)"); //Creates the Drill table
 
     }
 
@@ -138,7 +138,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public Cursor getAllDrillsData(String workoutID) {
 
         SQLiteDatabase db = this.getWritableDatabase();
-        Cursor result = db.rawQuery("SELECT * FROM " + TABLE_NAME_WORKOUT + " WHERE " + COL_5_DRILL + " = " + workoutID, null); //Gets all data from table
+        Cursor result = db.rawQuery("SELECT * FROM " + TABLE_NAME_DRILL + " WHERE " + COL_5_DRILL + " LIKE '" + workoutID + "'", null); //Gets all data from table
         return result;
     }
 

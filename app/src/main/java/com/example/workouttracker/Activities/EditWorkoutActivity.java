@@ -57,6 +57,11 @@ public class EditWorkoutActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        loadWorkoutPreview();
+    }
 
     private void openAddWorkoutDialog() {
 
