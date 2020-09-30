@@ -1,4 +1,4 @@
-package com.example.workouttracker.Activities;
+package com.example.workoutTracker.Activities;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -19,8 +19,8 @@ import android.widget.Toast;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.workouttracker.Classes.DatabaseHelper;
-import com.example.workouttracker.R;
+import com.example.workoutTracker.Classes.DatabaseHelper;
+import com.example.workoutTracker.R;
 
 import java.util.Objects;
 

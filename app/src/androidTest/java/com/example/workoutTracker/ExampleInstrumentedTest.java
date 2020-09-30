@@ -1,4 +1,4 @@
-package com.example.workouttracker;
+package com.example.workoutTracker;
 
 import android.content.Context;
 

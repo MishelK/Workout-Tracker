@@ -1,10 +1,9 @@
-package com.example.workouttracker.Activities;
+package com.example.workoutTracker.Activities;
 
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -15,10 +14,12 @@ import android.widget.TextView;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.workouttracker.Classes.DatabaseHelper;
-import com.example.workouttracker.R;
+import com.example.workoutTracker.Classes.DatabaseHelper;
+import com.example.workoutTracker.R;
 
 public class BeginWorkoutActivity extends AppCompatActivity {
+
+    public static final String WORKOUT_ID = "workout_id";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -66,13 +67,15 @@ public class BeginWorkoutActivity extends AppCompatActivity {
                 descTv = workoutPreview.findViewById(R.id.tv_workout_preview_desc);
                 descTv.setText(result.getString(2));
                 btnSelect = workoutPreview.findViewById(R.id.btn_workout_more);
+                final String workoutID = result.getString(0);
                 btnSelect.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) { // Upon selecting a workout
-                        
+                        Intent intent = new Intent(BeginWorkoutActivity.this, WorkoutScreen.class);
+                        intent.putExtra(WORKOUT_ID, workoutID);
+                        startActivity(intent);
                     }
                 });
-                //workoutPreview.setGravity(Gravity.CENTER);
                 workoutListLayout.addView(workoutPreview);
             }
 

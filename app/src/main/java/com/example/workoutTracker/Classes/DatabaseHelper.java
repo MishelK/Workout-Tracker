@@ -1,4 +1,4 @@
-package com.example.workouttracker.Classes;
+package com.example.workoutTracker.Classes;
 
 import android.content.ContentValues;
 import android.content.Context;

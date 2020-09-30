@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.workouttracker">
+    package="com.example.workoutTracker">
 
     <application
         android:allowBackup="true"
@@ -9,18 +9,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Activities.MainActivity">
+        <activity android:name="com.example.workoutTracker.Activities.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activities.BeginWorkoutActivity" android:launchMode="singleTask"/>
-        <activity android:name=".Activities.EditWorkoutActivity" android:launchMode="singleTask"/>
-        <activity android:name=".Activities.TrackWorkoutActivity" android:launchMode="singleTask"/>
-        <activity android:name=".Activities.SettingsActivity" android:launchMode="singleTask"/>
-        <activity android:name=".Activities.WorkoutInfoActivity" android:launchMode="singleTask"/>
+        <activity android:name="com.example.workoutTracker.Activities.BeginWorkoutActivity" android:launchMode="singleTask"/>
+        <activity android:name="com.example.workoutTracker.Activities.EditWorkoutActivity" android:launchMode="singleTask"/>
+        <activity android:name="com.example.workoutTracker.Activities.TrackWorkoutActivity" android:launchMode="singleTask"/>
+        <activity android:name="com.example.workoutTracker.Activities.SettingsActivity" android:launchMode="singleTask"/>
+        <activity android:name="com.example.workoutTracker.Activities.WorkoutInfoActivity" android:launchMode="singleTask"/>
+        <activity android:name=".Activities.WorkoutScreen" android:launchMode="singleTask"/>
     </application>
 
 </manifest>

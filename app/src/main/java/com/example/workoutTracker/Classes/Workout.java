@@ -1,4 +1,4 @@
-package com.example.workouttracker.Classes;
+package com.example.workoutTracker.Classes;
 
 import java.util.LinkedList;
 
