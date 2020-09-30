@@ -1,13 +1,21 @@
 package com.example.workouttracker.Activities;
 
+import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.workouttracker.Classes.DatabaseHelper;
 import com.example.workouttracker.R;
 
 public class BeginWorkoutActivity extends AppCompatActivity {
@@ -16,6 +24,8 @@ public class BeginWorkoutActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_beginworkout);
+
+        loadWorkoutList();
 
         //Setting Return Button
         Button btnReturn = findViewById(R.id.btn_return_begin);
@@ -30,7 +40,45 @@ public class BeginWorkoutActivity extends AppCompatActivity {
 
     }
 
+    public void loadWorkoutList() {
 
+        final Cursor result = DatabaseHelper.getInstance(BeginWorkoutActivity.this).getAllWorkoutData();
+
+        if(result.getCount() > 0) { //Checking if there are any workouts returned from the database
+
+            LinearLayout workoutListLayout = findViewById(R.id.ll_workout_list); // Linear Layout that will contain all sub-RelativeLayouts
+            workoutListLayout.removeAllViews();
+            TextView nameTv, descTv;
+            Button btnSelect;
+
+            LayoutInflater layoutInflater;
+            layoutInflater = (LayoutInflater) getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            layoutInflater = LayoutInflater.from(BeginWorkoutActivity.this);
+
+            RelativeLayout workoutPreview;
+
+            while (result.moveToNext()) { // will be false when we ran out of unchecked results
+
+                workoutPreview = (RelativeLayout) layoutInflater.inflate(R.layout.layout_workout_preview, null);
+
+                nameTv = workoutPreview.findViewById(R.id.tv_workout_preview_name);
+                nameTv.setText(result.getString(1));
+                descTv = workoutPreview.findViewById(R.id.tv_workout_preview_desc);
+                descTv.setText(result.getString(2));
+                btnSelect = workoutPreview.findViewById(R.id.btn_workout_more);
+                btnSelect.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) { // Upon selecting a workout
+                        
+                    }
+                });
+                //workoutPreview.setGravity(Gravity.CENTER);
+                workoutListLayout.addView(workoutPreview);
+            }
+
+        }
+
+    }
 
 
 }

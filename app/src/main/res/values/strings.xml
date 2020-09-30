@@ -22,4 +22,5 @@
     <string name="btn_txt_save">Save</string>
     <string name="btn_txt_cancel">Cancel</string>
     <string name="tv_txt_drill_name">Drill Name</string>
+    <string name="tv_txt_select_workout">Select Your Workout</string>
 </resources>
