@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="300dp"
-    android:layout_height="130dp"
+    android:layout_width="280dp"
+    android:layout_height="100dp"
     android:orientation="vertical">
 
     <TextView
@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="15dp"
         android:layout_marginTop="15dp"
-        android:textSize="24sp"
+        android:textSize="22sp"
         android:textColor="#000000"
         />
 
@@ -22,29 +22,30 @@
         android:layout_below="@id/tv_drill_name"
         android:text="@string/tv_txt_sets"
         android:layout_marginStart="15dp"
-        android:textSize="20sp"
+        android:textSize="18sp"
         android:textColor="#000000"
+        android:layout_toEndOf="@id/tv_num_reps"
         />
 
     <TextView
         android:id="@+id/tv_num_sets"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:textSize="20sp"
+        android:layout_marginStart="6dp"
+        android:textSize="18sp"
         android:textColor="#000000"
-        android:layout_toEndOf="@id/tv_txt_sets"
         android:layout_below="@id/tv_drill_name"
+        android:layout_toEndOf="@id/tv_txt_sets"
         />
 
     <TextView
         android:id="@+id/tv_txt_repss"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/tv_txt_sets"
+        android:layout_below="@id/tv_drill_name"
         android:text="@string/tv_txt_reps"
         android:layout_marginStart="15dp"
-        android:textSize="20sp"
+        android:textSize="18sp"
         android:textColor="#000000"
         />
 
@@ -52,22 +53,21 @@
         android:id="@+id/tv_num_reps"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:textSize="20sp"
+        android:layout_marginStart="6dp"
+        android:textSize="18sp"
         android:textColor="#000000"
-        android:layout_toEndOf="@id/tv_txt_sets"
-        android:layout_below="@id/tv_num_sets"
+        android:layout_toEndOf="@id/tv_txt_repss"
+        android:layout_below="@id/tv_drill_name"
         />
 
-    <Button
-        android:id="@+id/btn_drill_delete"
+    <CheckBox
+        android:id="@+id/cb_drill"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/btn_txt_delete"
+        android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="10dp"/>
-
+        android:layout_marginHorizontal="20dp"
+        />
 
 
 </RelativeLayout>

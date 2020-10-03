@@ -27,4 +27,8 @@
     <string name="btn_txt_start">התחל</string>
     <string name="btn_txt_pause">השהה</string>
     <string name="btn_txt_reset">אפס</string>
+    <string name="btn_txt_next">הבא</string>
+    <string name="btn_txt_finish">סיים</string>
+    <string name="tv_txt_drill_list">רשימת תרגילים</string>
+    <string name="tv_txt_current_drill">תרגיל נוכחי</string>
 </resources>
