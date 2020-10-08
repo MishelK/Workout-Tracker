@@ -30,4 +30,5 @@
     <string name="btn_txt_finish">Finish</string>
     <string name="tv_txt_drill_list">Drill List</string>
     <string name="tv_txt_current_drill">Current Drill</string>
+    <string name="tv_txt_sets_remaining">Sets Remaining</string>
 </resources>

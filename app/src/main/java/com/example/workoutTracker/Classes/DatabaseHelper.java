@@ -142,4 +142,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return result;
     }
 
+    public Cursor getDrillById(String drillID) {
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor result = db.rawQuery("SELECT * FROM " + TABLE_NAME_DRILL + " WHERE " + COL_1_DRILL + " = ?",new String[] { drillID });
+        return result;
+
+    }
+
 }
