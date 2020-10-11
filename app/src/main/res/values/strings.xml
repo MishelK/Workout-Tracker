@@ -31,4 +31,11 @@
     <string name="tv_txt_drill_list">Drill List</string>
     <string name="tv_txt_current_drill">Current Drill</string>
     <string name="tv_txt_sets_remaining">Sets Remaining</string>
+    <string name="btn_txt_yes">Yes</string>
+    <string name="btn_txt_no">No</string>
+    <string name="tv_txt_are_you_sure">Are you sure you would like to cancel the workout?</string>
+    <string name="tv_txt_hint_progress_lost">(Progress will be lost)</string>
+    <string name="tv_txt_drills_complete">Nice job! all drills have been completed.</string>
+    <string name="tv_txt_hint_finish_workout">(would you like to finalize your workout?)</string>
+    <string name="tv_txt_end_workout">Are you sure you would like to end your workout?</string>
 </resources>

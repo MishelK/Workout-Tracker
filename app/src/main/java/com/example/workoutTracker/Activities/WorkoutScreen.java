@@ -1,8 +1,11 @@
 package com.example.workoutTracker.Activities;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.LayoutInflater;
@@ -21,6 +24,7 @@ import com.example.workoutTracker.Classes.DatabaseHelper;
 import com.example.workoutTracker.R;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 
 public class WorkoutScreen extends AppCompatActivity {
@@ -28,7 +32,7 @@ public class WorkoutScreen extends AppCompatActivity {
     public static final String WORKOUT_ID = "workout_id";
 
     TextView countdownTv, setsRemainingTv;
-    Button btnCountdownStartPause, btnCountdownReset, btnCurrentDrillNext;
+    Button btnCountdownStartPause, btnCountdownReset, btnCurrentDrillNext, btnCancelWorkout, btnFinishWorkout;
 
     CountDownTimer countDownTimer;
     long startTimeInMillis = 60000; // 1 Min
@@ -50,10 +54,10 @@ public class WorkoutScreen extends AppCompatActivity {
         btnCountdownReset = findViewById(R.id.btn_timer_reset);
         timerReset = true;
 
-        updateTimer(); // Setting the initial time left on the timer/
+        updateTimer(); // Setting the initial time left on the timer
 
         final String workoutID = getIntent().getStringExtra(WORKOUT_ID);  // Getting the id of the workout we are looking to show in detail.
-        initDrillMap(workoutID); // Initializing the HashMap which is used to track ticked drills
+        initDrillMap(workoutID); // Initializing the HashMap which is used to track checked drills
         loadDrillList(workoutID); // Loading the drill list with checkboxes
 
         btnCountdownStartPause.setOnClickListener(new View.OnClickListener() {
@@ -72,12 +76,12 @@ public class WorkoutScreen extends AppCompatActivity {
         });
 
         setsRemainingTv = findViewById(R.id.tv_current_drill_sets);
-        btnCurrentDrillNext = findViewById(R.id.btn_current_drill_next);
+        btnCurrentDrillNext = findViewById(R.id.btn_current_drill_next); // The "Next" button is used upon completion of a set, we decrease the num of sets remaining by 1 and if all sets have been completed, we check the drill and select a new one
         btnCurrentDrillNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int setsRemaining = Integer.parseInt(setsRemainingTv.getText().toString()) - 1;
-                if(setsRemaining == 0){ //if we reached 0 then we need to tick the current drill and set the next one
+                if(setsRemaining == 0){ // if we reached 0 then we need to tick the current drill and set the next one
                     tickDrill(currentDrillID);
                     selectNewCurrentDrill(workoutID);
                     loadDrillList(workoutID);
@@ -89,7 +93,65 @@ public class WorkoutScreen extends AppCompatActivity {
             }
         });
 
+        btnCancelWorkout = findViewById(R.id.btn_cancel); // This button is used to cancel a workout and exit the workout screen
+        btnCancelWorkout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Dialog dialog = new Dialog(WorkoutScreen.this); // This dialog is to confirm the user would like to cancel the workout
+                dialog.setContentView(R.layout.dialog_cancelworkout);
+                dialog.setCancelable(true);
+                dialog.show();
+
+                Button btnNo = dialog.findViewById(R.id.btn_no);
+                btnNo.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+
+                Button btnYes = dialog.findViewById(R.id.btn_yes);
+                btnYes.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(WorkoutScreen.this, BeginWorkoutActivity.class);
+                        startActivity(intent);
+                    }
+                });
+            }
+        });
+
+        btnFinishWorkout = findViewById(R.id.btn_finish);
+        btnFinishWorkout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Dialog dialog = new Dialog(WorkoutScreen.this); // This dialog is to confirm the user would like to finish the workout
+                dialog.setContentView(R.layout.dialog_finishworkout);
+                dialog.setCancelable(true);
+                dialog.show();
+
+                Button btnNo = dialog.findViewById(R.id.btn_no);
+                btnNo.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                    }
+                });
+
+                Button btnYes = dialog.findViewById(R.id.btn_yes);
+                btnYes.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        dialog.dismiss();
+                        finishWorkout();
+                    }
+                });
+
+            }
+        });
+
     }
+
 
     public void startStop() {
 
@@ -100,6 +162,7 @@ public class WorkoutScreen extends AppCompatActivity {
             startTimer();
         }
     }
+
 
     public void startTimer(){
 
@@ -138,6 +201,7 @@ public class WorkoutScreen extends AppCompatActivity {
         btnCountdownReset.setTextColor(Color.GRAY);
     }
 
+
     public void stopTimer(){
 
         countDownTimer.cancel();
@@ -148,12 +212,14 @@ public class WorkoutScreen extends AppCompatActivity {
         btnCountdownReset.setTextColor(Color.BLACK);
     }
 
+
     public void resetTimer() {
 
         timeLeftInMillis = startTimeInMillis;
         updateTimer();
         timerReset = true;
     }
+
 
     public void updateTimer() {
 
@@ -168,6 +234,7 @@ public class WorkoutScreen extends AppCompatActivity {
 
         countdownTv.setText(timeLeftText);
     }
+
 
     public void loadDrillList(final String workoutID) {
 
@@ -236,6 +303,7 @@ public class WorkoutScreen extends AppCompatActivity {
 
     }
 
+
     public void setCurrentDrillById(String drillID) {
 
         Cursor result = DatabaseHelper.getInstance(WorkoutScreen.this).getDrillById(drillID);
@@ -253,6 +321,7 @@ public class WorkoutScreen extends AppCompatActivity {
             currentDrillID = result.getString(0);
         }
     }
+
 
     public void selectNewCurrentDrill(String workoutID) {
         boolean found = false;
@@ -274,9 +343,30 @@ public class WorkoutScreen extends AppCompatActivity {
             }
         }
         if(!found){ // Will be true when all drills have been completed
+            final Dialog dialog = new Dialog(WorkoutScreen.this); // This dialog is to confirm the user would like to finalize the workout
+            dialog.setContentView(R.layout.dialog_drillscomplete);
+            dialog.setCancelable(true);
+            dialog.show();
+
+            Button btnNo = dialog.findViewById(R.id.btn_no);
+            btnNo.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    dialog.dismiss();
+                }
+            });
+
+            Button btnYes = dialog.findViewById(R.id.btn_yes);
+            btnYes.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    finishWorkout();
+                }
+            });
 
         }
     }
+
 
     public void initDrillMap(final String workoutID) {
 
@@ -290,6 +380,7 @@ public class WorkoutScreen extends AppCompatActivity {
         }
     }
 
+
     public void tickDrill(String drillID) { // Will change value of flag inside HashMap to opposite value.
 
         boolean temp;
@@ -298,6 +389,13 @@ public class WorkoutScreen extends AppCompatActivity {
                 temp = drillMap.get(drillID);
                 drillMap.put(drillID, !temp);
         }
+    }
+
+
+    public void finishWorkout() {
+
+        //TBI
+
     }
 
 

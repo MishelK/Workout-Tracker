@@ -32,4 +32,11 @@
     <string name="tv_txt_drill_list">רשימת תרגילים</string>
     <string name="tv_txt_current_drill">תרגיל נוכחי</string>
     <string name="tv_txt_sets_remaining">סטים נותרו</string>
+    <string name="btn_txt_yes">כן</string>
+    <string name="btn_txt_no">לא</string>
+    <string name="tv_txt_are_you_sure">האם אתה בטוח שתרצה לבטל את האימון?</string>
+    <string name="tv_txt_hint_progress_lost">(ההתקדמות הנוכחית תימחק)</string>
+    <string name="tv_txt_drills_complete">כל הכבוד! ביצעת את כל התרגילים.</string>
+    <string name="tv_txt_hint_finish_workout">(האם תרצה לסיים את האימון?)</string>
+    <string name="tv_txt_end_workout">האם לסיים את האימון?</string>
 </resources>
