@@ -32,7 +32,7 @@ public class WorkoutScreen extends AppCompatActivity {
     public static final String WORKOUT_ID = "workout_id";
 
     TextView countdownTv, setsRemainingTv;
-    Button btnCountdownStartPause, btnCountdownReset, btnCurrentDrillNext, btnCancelWorkout, btnFinishWorkout;
+    Button btnCountdownStartPause, btnCountdownReset, btnTimerPlus, btnTimerMinus, btnCurrentDrillNext, btnCancelWorkout, btnFinishWorkout;
 
     CountDownTimer countDownTimer;
     long startTimeInMillis = 60000; // 1 Min
@@ -72,6 +72,30 @@ public class WorkoutScreen extends AppCompatActivity {
             public void onClick(View v) {
                 if(!timerRunning)
                     resetTimer();
+            }
+        });
+
+        btnTimerPlus = findViewById(R.id.btn_timer_plus);
+        btnTimerMinus = findViewById(R.id.btn_timer_minus);
+        btnTimerPlus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!timerRunning){
+                    timeLeftInMillis += 10000;
+                    startTimeInMillis += 10000;
+                    updateTimer();
+                }
+
+            }
+        });
+        btnTimerMinus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!timerRunning && startTimeInMillis > 0){
+                    timeLeftInMillis -= 10000;
+                    startTimeInMillis -= 10000;
+                    updateTimer();
+                }
             }
         });
 
@@ -226,8 +250,9 @@ public class WorkoutScreen extends AppCompatActivity {
         int minutes = (int) timeLeftInMillis / 60000;
         int seconds = (int) timeLeftInMillis % 60000 / 1000; // after performing % and removing time left in minutes we divide by 1000 to we have the number of seconds left
 
-        String timeLeftText;
-        timeLeftText = "" + minutes;
+        String timeLeftText = "";
+        if (minutes < 10) timeLeftText += "0";
+        timeLeftText += "" + minutes;
         timeLeftText += ":";
         if (seconds < 10) timeLeftText += "0";
         timeLeftText += seconds;
