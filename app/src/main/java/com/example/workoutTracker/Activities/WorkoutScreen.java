@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.LayoutInflater;
@@ -23,26 +22,28 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.workoutTracker.Classes.DatabaseHelper;
 import com.example.workoutTracker.R;
 
+import java.io.Serializable;
 import java.util.HashMap;
-import java.util.Objects;
 
 
 public class WorkoutScreen extends AppCompatActivity {
 
     public static final String WORKOUT_ID = "workout_id";
+    public static final String DRILL_HASH_MAP = "drillMap";
 
     TextView countdownTv, setsRemainingTv;
     Button btnCountdownStartPause, btnCountdownReset, btnTimerPlus, btnTimerMinus, btnCurrentDrillNext, btnCancelWorkout, btnFinishWorkout;
 
     CountDownTimer countDownTimer;
-    long startTimeInMillis = 60000; // 1 Min
-    long timeLeftInMillis = 60000;
+    long timerStartTimeInMillis, timerTimeLeftInMillis = 60000; // 1 Min, will be used with the countdown timer
+    long workoutStartTimeInMillis, workoutEndTimeInMillis = 0; // will be used to calculate workout duration
 
     boolean timerRunning, timerReset = false;
     boolean initialCurrentDrillSelection = true;
 
     HashMap<String, Boolean> drillMap; // Used to track completed drills
-    String currentDrillID;
+    String currentDrillID, workoutID;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -53,10 +54,10 @@ public class WorkoutScreen extends AppCompatActivity {
         btnCountdownStartPause = findViewById(R.id.btn_timer_startPause);
         btnCountdownReset = findViewById(R.id.btn_timer_reset);
         timerReset = true;
+        updateTimer(); // Setting the initial time left on the timer view
+        workoutStartTimeInMillis = System.currentTimeMillis(); // Used to know workout duration
 
-        updateTimer(); // Setting the initial time left on the timer
-
-        final String workoutID = getIntent().getStringExtra(WORKOUT_ID);  // Getting the id of the workout we are looking to show in detail.
+        workoutID = getIntent().getStringExtra(WORKOUT_ID);  // Getting the id of the workout we are looking to show in detail.
         initDrillMap(workoutID); // Initializing the HashMap which is used to track checked drills
         loadDrillList(workoutID); // Loading the drill list with checkboxes
 
@@ -81,8 +82,8 @@ public class WorkoutScreen extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if(!timerRunning){
-                    timeLeftInMillis += 10000;
-                    startTimeInMillis += 10000;
+                    timerTimeLeftInMillis += 10000;
+                    timerStartTimeInMillis += 10000;
                     updateTimer();
                 }
 
@@ -91,9 +92,9 @@ public class WorkoutScreen extends AppCompatActivity {
         btnTimerMinus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!timerRunning && startTimeInMillis > 0){
-                    timeLeftInMillis -= 10000;
-                    startTimeInMillis -= 10000;
+                if(!timerRunning && timerStartTimeInMillis > 0){
+                    timerTimeLeftInMillis -= 10000;
+                    timerStartTimeInMillis -= 10000;
                     updateTimer();
                 }
             }
@@ -191,10 +192,10 @@ public class WorkoutScreen extends AppCompatActivity {
     public void startTimer(){
 
         if(timerReset)
-            countDownTimer = new CountDownTimer(startTimeInMillis, 1000) { // countDownInterval is every second, so onTick will be called every second
+            countDownTimer = new CountDownTimer(timerStartTimeInMillis, 1000) { // countDownInterval is every second, so onTick will be called every second
                 @Override
                 public void onTick(long millisUntilFinished) {
-                    timeLeftInMillis = millisUntilFinished;
+                    timerTimeLeftInMillis = millisUntilFinished;
                     updateTimer(); // Will update the timer TextView
                 }
 
@@ -205,10 +206,10 @@ public class WorkoutScreen extends AppCompatActivity {
             }.start();
 
         else
-            countDownTimer = new CountDownTimer(timeLeftInMillis, 1000) { // countDownInterval is every second, so onTick will be called every second
+            countDownTimer = new CountDownTimer(timerTimeLeftInMillis, 1000) { // countDownInterval is every second, so onTick will be called every second
                 @Override
                 public void onTick(long millisUntilFinished) {
-                    timeLeftInMillis = millisUntilFinished;
+                    timerTimeLeftInMillis = millisUntilFinished;
                     updateTimer(); // Will update the timer TextView
                 }
 
@@ -239,7 +240,7 @@ public class WorkoutScreen extends AppCompatActivity {
 
     public void resetTimer() {
 
-        timeLeftInMillis = startTimeInMillis;
+        timerTimeLeftInMillis = timerStartTimeInMillis;
         updateTimer();
         timerReset = true;
     }
@@ -247,8 +248,8 @@ public class WorkoutScreen extends AppCompatActivity {
 
     public void updateTimer() {
 
-        int minutes = (int) timeLeftInMillis / 60000;
-        int seconds = (int) timeLeftInMillis % 60000 / 1000; // after performing % and removing time left in minutes we divide by 1000 to we have the number of seconds left
+        int minutes = (int) timerTimeLeftInMillis / 60000;
+        int seconds = (int) timerTimeLeftInMillis % 60000 / 1000; // after performing % and removing time left in minutes we divide by 1000 to we have the number of seconds left
 
         String timeLeftText = "";
         if (minutes < 10) timeLeftText += "0";
@@ -263,7 +264,7 @@ public class WorkoutScreen extends AppCompatActivity {
 
     public void loadDrillList(final String workoutID) {
 
-        Cursor result = DatabaseHelper.getInstance(WorkoutScreen.this).getAllDrillsData(workoutID);
+        Cursor result = DatabaseHelper.getInstance(WorkoutScreen.this).getDrillsByWorkoutID(workoutID);
 
         if(result.getCount() > 0) { // Checking if there are any drills in the result
 
@@ -351,7 +352,7 @@ public class WorkoutScreen extends AppCompatActivity {
     public void selectNewCurrentDrill(String workoutID) {
         boolean found = false;
 
-        Cursor result = DatabaseHelper.getInstance(WorkoutScreen.this).getAllDrillsData(workoutID);
+        Cursor result = DatabaseHelper.getInstance(WorkoutScreen.this).getDrillsByWorkoutID(workoutID);
         if(result.getCount() > 0){
             while(result.moveToNext() && !found){
                 if(!drillMap.get(result.getString(0))){ // checking if the drill is ticked or not
@@ -385,6 +386,7 @@ public class WorkoutScreen extends AppCompatActivity {
             btnYes.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    dialog.dismiss();
                     finishWorkout();
                 }
             });
@@ -396,7 +398,7 @@ public class WorkoutScreen extends AppCompatActivity {
     public void initDrillMap(final String workoutID) {
 
         drillMap = new HashMap<>();
-        Cursor result = DatabaseHelper.getInstance(WorkoutScreen.this).getAllDrillsData(workoutID);
+        Cursor result = DatabaseHelper.getInstance(WorkoutScreen.this).getDrillsByWorkoutID(workoutID);
 
         if(result.getCount() > 0){
             while(result.moveToNext()){
@@ -418,8 +420,14 @@ public class WorkoutScreen extends AppCompatActivity {
 
 
     public void finishWorkout() {
+        Intent intent = new Intent(WorkoutScreen.this, WorkoutSummaryActivity.class);
 
-        //TBI
+        workoutEndTimeInMillis = System.currentTimeMillis();
+        long workoutDurationInMillis = workoutEndTimeInMillis - workoutStartTimeInMillis;
+
+        intent.putExtra(DRILL_HASH_MAP, (Serializable) drillMap); // HashMap uses Serializable interface, we use that to send the HashMap to the summary Activity
+        intent.putExtra(WORKOUT_ID, workoutID);
+
 
     }
 

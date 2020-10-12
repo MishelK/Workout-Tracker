@@ -86,7 +86,7 @@ public class WorkoutInfoActivity extends AppCompatActivity {
 
     public void loadDrillList(final String workoutID) {
 
-        Cursor result = DatabaseHelper.getInstance(WorkoutInfoActivity.this).getAllDrillsData(workoutID);
+        Cursor result = DatabaseHelper.getInstance(WorkoutInfoActivity.this).getDrillsByWorkoutID(workoutID);
 
         if(result.getCount() > 0) { // Checking if there are any drills in the result
 
