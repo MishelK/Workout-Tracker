@@ -4,17 +4,21 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
+import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,7 +27,11 @@ import com.example.workoutTracker.Classes.DatabaseHelper;
 import com.example.workoutTracker.R;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 
 
 public class WorkoutScreen extends AppCompatActivity {
@@ -35,8 +43,10 @@ public class WorkoutScreen extends AppCompatActivity {
     Button btnCountdownStartPause, btnCountdownReset, btnTimerPlus, btnTimerMinus, btnCurrentDrillNext, btnCancelWorkout, btnFinishWorkout;
 
     CountDownTimer countDownTimer;
-    long timerStartTimeInMillis, timerTimeLeftInMillis = 60000; // 1 Min, will be used with the countdown timer
+    long timerStartTimeInMillis = 60000, timerTimeLeftInMillis = 60000; // 1 Min, will be used with the countdown timer
     long workoutStartTimeInMillis, workoutEndTimeInMillis = 0; // will be used to calculate workout duration
+
+    float workoutRating = 0;
 
     boolean timerRunning, timerReset = false;
     boolean initialCurrentDrillSelection = true;
@@ -168,7 +178,7 @@ public class WorkoutScreen extends AppCompatActivity {
                     @Override
                     public void onClick(View v) {
                         dialog.dismiss();
-                        finishWorkout();
+                        openRateWorkoutDialog();
                     }
                 });
 
@@ -387,7 +397,7 @@ public class WorkoutScreen extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     dialog.dismiss();
-                    finishWorkout();
+                    openRateWorkoutDialog();
                 }
             });
 
@@ -419,15 +429,67 @@ public class WorkoutScreen extends AppCompatActivity {
     }
 
 
+    public void openRateWorkoutDialog() {
+
+        final Dialog dialog = new Dialog(WorkoutScreen.this); // This dialog is to get a workout rating form the user
+        dialog.setContentView(R.layout.dialog_getworkoutrating);
+        dialog.setCancelable(true);
+        dialog.show();
+
+        RatingBar ratingBar = dialog.findViewById(R.id.ratingbar_workout);
+        ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+
+                workoutRating = rating;
+            }
+        });
+
+        Button btnSubmit = dialog.findViewById(R.id.btn_submit);
+        btnSubmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finishWorkout();
+            }
+        });
+
+
+    }
+
+
     public void finishWorkout() {
+
         Intent intent = new Intent(WorkoutScreen.this, WorkoutSummaryActivity.class);
 
         workoutEndTimeInMillis = System.currentTimeMillis();
-        long workoutDurationInMillis = workoutEndTimeInMillis - workoutStartTimeInMillis;
+        long workoutDurationInMillis = workoutEndTimeInMillis - workoutStartTimeInMillis; // Calculating Workout Duration
 
-        intent.putExtra(DRILL_HASH_MAP, (Serializable) drillMap); // HashMap uses Serializable interface, we use that to send the HashMap to the summary Activity
+        int hours = (int) workoutDurationInMillis / 3600000;
+        int minutes = (int) workoutDurationInMillis % 3600000 / 60000; // removing time elapsed in hours in order to be left with the remainder
+        int seconds = (int) workoutDurationInMillis % 60000 / 1000; // after performing % and removing time left in minutes we divide by 1000 to we have the number of seconds left
+
+        String workoutDurationFormatted = "";
+        if (hours < 10) workoutDurationFormatted += "0";
+        workoutDurationFormatted += "" + hours;
+        workoutDurationFormatted += ":";
+        if (minutes < 10) workoutDurationFormatted += "0";
+        workoutDurationFormatted += "" + minutes;
+        workoutDurationFormatted += ":";
+        if (seconds < 10) workoutDurationFormatted += "0";
+        workoutDurationFormatted += seconds; // now the workout duration is formatted into a string
+
+        Date currentDate = Calendar.getInstance().getTime();
+        SimpleDateFormat df = new SimpleDateFormat("dd-MMM-yyyy", Locale.getDefault()); // Getting the current date and setting it in selected format
+        String formattedDate = df.format(currentDate);
+
+        String workoutRatingString = Float.toString(workoutRating);
+
+        if(!DatabaseHelper.getInstance(this).addSummary(formattedDate, workoutDurationFormatted, workoutRatingString, workoutID))
+            Toast.makeText(this, R.string.toast_data_add_failed, Toast.LENGTH_SHORT).show();
+
         intent.putExtra(WORKOUT_ID, workoutID);
 
+        startActivity(intent);
 
     }
 

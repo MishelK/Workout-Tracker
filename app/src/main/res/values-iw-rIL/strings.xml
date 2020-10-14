@@ -39,4 +39,12 @@
     <string name="tv_txt_drills_complete">כל הכבוד! ביצעת את כל התרגילים.</string>
     <string name="tv_txt_hint_finish_workout">(האם תרצה לסיים את האימון?)</string>
     <string name="tv_txt_end_workout">האם לסיים את האימון?</string>
+    <string name="tv_txt_please_rate_workout">דרג את האימון שלך</string>
+    <string name="btn_txt_submit">דרג</string>
+    <string name="tv_txt_workout_summary">סיכום האימון</string>
+    <string name="tv_txt_date">תאריך</string>
+    <string name="tv_txt_duration">משך זמן</string>
+    <string name="tv_txt_your_rating">הדירוג שלך</string>
+    <string name="tv_txt_drills_completed">תרגילים שבוצעו</string>
+    <string name="tv_txt_share">שתף</string>
 </resources>

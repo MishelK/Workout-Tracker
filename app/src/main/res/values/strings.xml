@@ -38,4 +38,12 @@
     <string name="tv_txt_drills_complete">Nice job! all drills have been completed.</string>
     <string name="tv_txt_hint_finish_workout">(would you like to finalize your workout?)</string>
     <string name="tv_txt_end_workout">Are you sure you would like to end your workout?</string>
+    <string name="tv_txt_please_rate_workout">Please rate your workout below</string>
+    <string name="btn_txt_submit">Submit</string>
+    <string name="tv_txt_workout_summary">Workout Summary</string>
+    <string name="tv_txt_date">Date</string>
+    <string name="tv_txt_duration">Duration</string>
+    <string name="tv_txt_your_rating">Your Rating</string>
+    <string name="tv_txt_drills_completed">Drills Completed</string>
+    <string name="tv_txt_share">Share</string>
 </resources>
