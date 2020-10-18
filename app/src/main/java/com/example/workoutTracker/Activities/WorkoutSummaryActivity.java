@@ -41,7 +41,7 @@ public class WorkoutSummaryActivity extends AppCompatActivity {
         getWorkoutName();
         getSummaryInfo();
 
-        closeBtn = findViewById(R.id.btn_close);
+        closeBtn = findViewById(R.id.btn_cancel);
         closeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -49,7 +49,6 @@ public class WorkoutSummaryActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
 
     }
 
